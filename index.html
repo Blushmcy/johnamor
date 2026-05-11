@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>feliz cumpleaños mi niño 🎮</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body{
+  margin:0;
+  font-family:'Press Start 2P';
+  overflow:hidden;
+  color:white;
+  text-align:center;
+}
+
+/* 🌅 CIELO */
+.sky{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:linear-gradient(#5fb3ff,#aee1ff);
+  transition:1s;
+  z-index:-10;
+}
+
+.night{
+  background:linear-gradient(#0b1a3a,#1e3c72);
+}
+
+/* 🌿 SUELO */
+.ground{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:30%;
+  background:linear-gradient(#2ecc71 20%,#3e8e41 20%);
+  z-index:-5;
+}
+
+/* 🌳 ÁRBOLES */
+.tree{
+  position:absolute;
+  bottom:30%;
+  width:40px;
+  height:60px;
+  background:#8B5A2B;
+  z-index:0;
+}
+.tree::after{
+  content:"";
+  position:absolute;
+  width:80px;
+  height:60px;
+  left:-20px;
+  bottom:40px;
+  background:#2ecc71;
+}
+
+/* 🟨 TITULO */
+h1{
+  margin-top:30px;
+  color:#ffcc00;
+  text-shadow:4px 4px #000,6px 6px #000;
+  position:relative;
+  z-index:10;
+}
+
+/* 🎮 BOTONES */
+button{
+  font-family:inherit;
+  background:#7a7a7a;
+  border:4px solid #3a3a3a;
+  color:white;
+  padding:10px;
+  margin:10px;
+  cursor:pointer;
+}
+button:hover{
+  background:#9a9a9a;
+}
+
+/* 📦 CARTAS */
+.card{
+  background:rgba(0,0,0,0.85);
+  padding:20px;
+  margin:20px auto;
+  max-width:500px;
+  border-radius:10px;
+  position:relative;
+  z-index:10;
+}
+
+.hidden{display:none;}
+
+/* 🦖 DINO */
+.dino{
+  position:fixed;
+  bottom:0;
+  left:40px;
+  font-size:40px;
+}
+
+/* 🐰 CONEJO */
+.rabbit{
+  position:fixed;
+  bottom:30%;
+  left:20%;
+  font-size:35px;
+}
+
+/* 💖 CORAZONES */
+.heart{
+  position:fixed;
+  font-size:20px;
+  pointer-events:none;
+  z-index:9999;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  from{transform:translateY(0);}
+  to{transform:translateY(110vh);}
+}
+
+/* ⭐ ESTRELLAS */
+.star{
+  position:fixed;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="sky" id="sky"></div>
+<div class="ground"></div>
+
+<div class="tree" style="left:10%"></div>
+<div class="tree" style="left:40%"></div>
+<div class="tree" style="left:70%"></div>
+
+<div class="dino">🦖</div>
+<div class="rabbit" id="rabbit">🐰</div>
+
+<h1>🌿 FELIZ CUMPLEAÑOS MI AMORCITO 🌿</h1>
+
+<!-- NIVELES -->
+<div id="nivel1" class="card">
+<p>🎮 Nivel 1</p>
+<p>¿Qué eres para mí?</p>
+<button onclick="correcto1()">Mi todo 💕</button>
+<button onclick="incorrecto()">Un npc 🤨</button>
+</div>
+
+<div id="nivel2" class="card hidden">
+<p>🍄 Nivel 2</p>
+<p>¿Quién es mi persona favorita?</p>
+<button onclick="correcto2()">Tú 💖</button>
+<button onclick="incorrecto()">Otro 😡</button>
+</div>
+
+<div id="nivel3" class="card hidden">
+<p>🌸 Nivel 3</p>
+<button onclick="finaljuego()">Abrir 🎁</button>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="card hidden">
+<h2>🎉 FELIZ CUMPLEAÑOS JOHN 🎉</h2>
+<p>Has completado el juego 💘</p>
+
+<div class="card">
+<p style="font-size:10px; line-height:1.6;">
+Hoy es un día demasiado especial porque naciste tú...
+Te quiero muchísimo ❤️
+</p>
+</div>
+</div>
+
+<script>
+
+/* 🎮 NIVELES */
+function correcto1(){
+  document.getElementById("nivel1").classList.add("hidden");
+  document.getElementById("nivel2").classList.remove("hidden");
+}
+
+function correcto2(){
+  document.getElementById("nivel2").classList.add("hidden");
+  document.getElementById("nivel3").classList.remove("hidden");
+}
+
+function incorrecto(){
+  alert("❌ intenta otra vez");
+}
+
+/* 🎁 FINAL + LLUVIA */
+function finaljuego(){
+  document.getElementById("nivel3").classList.add("hidden");
+  document.getElementById("final").classList.remove("hidden");
+  lluvia();
+}
+
+function lluvia(){
+  setInterval(()=>{
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "💖";
+
+    h.style.left = Math.random() * window.innerWidth + "px";
+    h.style.top = "-20px";
+    h.style.animationDuration = (2 + Math.random()*3) + "s";
+
+    document.body.appendChild(h);
+
+    setTimeout(()=>h.remove(),6000);
+  },120);
+}
+
+/* 🌙 CICLO DÍA/NOCHE */
+let day = true;
+setInterval(()=>{
+  day = !day;
+  document.getElementById("sky").classList.toggle("night");
+},8000);
+
+/* 🐰 MOVIMIENTO CONEJO */
+setInterval(()=>{
+  document.getElementById("rabbit").style.left = Math.random()*80 + "%";
+},1200);
+
+</script>
+
+</body>
+</html>
